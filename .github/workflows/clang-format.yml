@@ -25,6 +25,6 @@ jobs:
       - name: Run clang-format check
         run: |
           clang-format --dry-run -Werror src/main.cpp
-          clang-format --dry-run -Werror src/display*
+          clang-format --dry-run -Werror src/display/*
 
 
