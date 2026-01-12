@@ -5,5 +5,6 @@ project(machine_learning)
 
 target_sources(app PRIVATE
   src/main.cpp
+  src/buttons/buttons.cpp
   src/display/display.cpp
 )
