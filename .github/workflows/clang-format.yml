@@ -26,5 +26,8 @@ jobs:
         run: |
           clang-format --dry-run -Werror src/main.cpp
           clang-format --dry-run -Werror src/display/*
+          clang-format --dry-run -Werror src/buttons/*
+
+
 
 
