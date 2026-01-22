@@ -15,7 +15,7 @@ jobs:
           egress-policy: audit
 
       - name: Checkout
-        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
 
       - name: Install clang-format
         run: |
@@ -24,10 +24,6 @@ jobs:
 
       - name: Run clang-format check
         run: |
-          clang-format --dry-run -Werror src/main.cpp
-          clang-format --dry-run -Werror src/display/*
-          clang-format --dry-run -Werror src/buttons/*
-
-
-
+          find src -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) \
+            -exec clang-format --dry-run -Werror {} +
 

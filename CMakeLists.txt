@@ -7,4 +7,9 @@ target_sources(app PRIVATE
   src/main.cpp
   src/buttons/buttons.cpp
   src/display/display.cpp
+  src/ml/dense_layer/dense_layer.cpp
+  src/ml/neural_network/single_layer.cpp
+)
+include_directories(
+  src
 )

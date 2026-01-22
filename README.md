@@ -36,10 +36,12 @@ The project uses clang-format.
 
 Run format check:
 ```
-clang-format --dry-run -Werror src/*
+find src -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) \
+  -exec clang-format --dry-run -Werror {} +
 ```
 
 Run formatter:
 ```
-clang-format -i src/*
+find src -type f \( -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" \) \
+  -exec clang-format -i {} +
 ```
