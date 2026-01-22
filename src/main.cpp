@@ -57,14 +57,11 @@ extern "C" int main(void) {
     // Extract the digit, round to the nearest integer.
     const uint8_t digit{static_cast<uint8_t>(output + 0.5)};
 
-    printk("digit=%u\n", digit);
-
     // Update the displayed digit on change.
     if (digit != lastDigit) {
       lastDigit = digit;
       display_set_value(digit);
     }
-    // Wait one second before monitoring again.
-    k_msleep(250);
+    k_msleep(10);
   }
 }
