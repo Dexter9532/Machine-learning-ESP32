@@ -14,13 +14,11 @@ Build image:
 ```
 west build -p always \
   -b adafruit_feather_esp32s3_tft_reverse/esp32s3/procpu \
-  -d name/build \
-  name/
 ```
 
 Flash image:
 ```
-cd name/build && west flash
+west flash
 ```
 
 ## Debug:
