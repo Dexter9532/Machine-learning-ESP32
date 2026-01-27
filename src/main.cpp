@@ -1,3 +1,6 @@
+/**
+ *@biref Main file for the machine-learning system.
+ */
 #include "buttons/buttons.hpp"
 #include "display/display.hpp"
 #include "ml/dense_layer/dense_layer.hpp"
