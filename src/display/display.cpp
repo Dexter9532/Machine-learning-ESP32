@@ -3,6 +3,7 @@
  *
  */
 #include "display.hpp"
+#include "misc/lv_area.h"
 
 #include <lvgl.h>
 #include <stdio.h>
@@ -19,6 +20,9 @@ static const struct gpio_dt_spec bl =
 
 static lv_obj_t *box;
 static lv_obj_t *label;
+
+static lv_obj_t *top_box;
+static lv_obj_t *top_label;
 
 static int current_value;
 static int last_value;
@@ -37,6 +41,11 @@ static void lvgl_update(void) {
 
   int w = lv_obj_get_width(box);
   int h = lv_obj_get_height(box);
+
+  lv_obj_set_style_transform_angle(top_box, 1800, 0);
+  lv_obj_set_style_transform_pivot_x(top_box, lv_obj_get_width(top_box) / 2, 0);
+  lv_obj_set_style_transform_pivot_y(top_box, lv_obj_get_height(top_box) / 2,
+                                     0);
 
   lv_obj_set_style_transform_angle(box, 1800, 0);
   lv_obj_set_style_transform_pivot_x(box, w / 2, 0);
@@ -68,6 +77,15 @@ void display_init(void) {
   }
 
   lv_lock();
+
+  top_box = lv_obj_create(lv_scr_act());
+  lv_obj_remove_style_all(top_box);
+  lv_obj_set_size(top_box, LV_PCT(100), 30);
+  lv_obj_align(top_box, LV_ALIGN_BOTTOM_MID, 0, 0);
+
+  top_label = lv_label_create(top_box);
+  lv_label_set_text(top_label, "JOBO");
+  lv_obj_center(top_label);
 
   box = lv_obj_create(lv_scr_act());
   lv_obj_remove_style_all(box);
