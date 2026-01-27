@@ -1,3 +1,7 @@
+/**
+ *@brief Main file for display functions
+ *
+ */
 #include "display.hpp"
 
 #include <lvgl.h>
@@ -19,6 +23,11 @@ static lv_obj_t *label;
 static int current_value;
 static int last_value;
 
+/**
+ *@brief update display safely
+ *
+ *@note Display needs to be rotated 1800 degrece to fit needs.
+ */
 static void lvgl_update(void) {
   char buf[16];
   snprintf(buf, sizeof(buf), "%d", current_value);
@@ -34,6 +43,9 @@ static void lvgl_update(void) {
   lv_obj_set_style_transform_pivot_y(box, h / 2, 0);
 }
 
+/**
+ *@brief Initialize the display safely and set "JOBO" label at the top.
+ */
 void display_init(void) {
   const struct device *display = DEVICE_DT_GET(DT_CHOSEN(zephyr_display));
 
@@ -70,6 +82,11 @@ void display_init(void) {
   last_value = 0x7fffffff;
 }
 
+/**
+ *@brief Set display value.
+ *
+ *@return if value is the same as before.
+ */
 void display_set_value(int value) {
   current_value = value;
 

@@ -1,3 +1,6 @@
+/**
+ *@brief Main file for buttons functions.
+ */
 #include "buttons.hpp"
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/gpio.h>
@@ -6,6 +9,12 @@
 
 #define DEBOUNCE_MS 5
 
+/**
+ *@brief Check if debounce time is ok.
+ *
+ *@return False if now vs last is not inside wanted debounce.
+ *@return True if everything is okey and set new last.
+ */
 static inline bool time_ok(atomic_t *t_last) {
   uint32_t now = k_uptime_get_32();
   uint32_t last = (uint32_t)atomic_get(t_last);
@@ -40,6 +49,9 @@ static atomic_t armed2 = 1;
 
 static inline void toggle01(atomic_t *v) { atomic_xor(v, 1); }
 
+/**
+ *@brief Interrupt functions for button 0.
+ */
 static void isr0(const device *dev, gpio_callback *cb, uint32_t pins) {
   (void)dev;
   (void)cb;
@@ -60,6 +72,9 @@ static void isr0(const device *dev, gpio_callback *cb, uint32_t pins) {
   }
 }
 
+/**
+ *@brief Interrupt functions for button 1.
+ */
 static void isr1(const device *dev, gpio_callback *cb, uint32_t pins) {
   (void)dev;
   (void)cb;
@@ -81,6 +96,9 @@ static void isr1(const device *dev, gpio_callback *cb, uint32_t pins) {
   }
 }
 
+/**
+ *@brief Interrupt functions for button 2.
+ */
 static void isr2(const device *dev, gpio_callback *cb, uint32_t pins) {
   (void)dev;
   (void)cb;
@@ -98,6 +116,9 @@ static void isr2(const device *dev, gpio_callback *cb, uint32_t pins) {
   }
 }
 
+/**
+ *@brief Initialize button irq.
+ */
 void buttons_init_irq(void) {
 
   atomic_set(&t0, 0);
@@ -124,6 +145,23 @@ void buttons_init_irq(void) {
   gpio_add_callback(sw2.port, &cb2);
 }
 
+/**
+ *@brief Get toggle state of button.
+ *
+ *@return 0/1
+ */
 uint8_t button0_get(void) { return (uint8_t)(atomic_get(&b0) & 1); }
+
+/**
+ *@brief Get toggle state of button.
+ *
+ **@return 0/1
+ */
 uint8_t button1_get(void) { return (uint8_t)(atomic_get(&b1) & 1); }
+
+/**
+ *@brief Get toggle state of button.
+ *
+ **@return 0/1
+ */
 uint8_t button2_get(void) { return (uint8_t)(atomic_get(&b2) & 1); }
