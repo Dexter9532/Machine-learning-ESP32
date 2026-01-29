@@ -34,12 +34,12 @@ const ml::Matrix1d &SingleLayer::predict(const ml::Matrix1d &input) noexcept {
 }
 
 //--------------------------------------------------------------------------------//
-bool SingleLayer::train(size_t epochCount, double learningrate) noexcept {
-  if ((0U == epochCount) || (0.0 >= learningrate)) {
+bool SingleLayer::train(double learningrate) noexcept {
+  if (0.0 >= learningrate) {
     return false;
   }
 
-  for (size_t epoch = 0; epoch < epochCount; ++epoch) {
+  while (!isPredictDone()) {
     for (size_t k{}; k < myTrainSetCount; k++) {
       // (a) forward: hidden then output
       if (!myHiddenLayer.feedforward(myTrainInput[k])) {
@@ -65,8 +65,23 @@ bool SingleLayer::train(size_t epochCount, double learningrate) noexcept {
         return false;
       }
     }
+    ++myEpochsUsed;
   }
   return true;
 }
 
+bool SingleLayer::isPredictDone() noexcept {
+
+  constexpr double tol = 1e-1;
+
+  for (size_t i{}; i < myTrainSetCount; ++i) {
+    const double pred = predict(myTrainInput[i])[0];
+    const double target = myTrainOutput[i][0];
+    if (abs(pred - target) > tol) {
+      return false;
+    }
+  }
+  return true;
+}
+int SingleLayer::getEpochsUsed() const noexcept { return myEpochsUsed; }
 } // namespace ml::neural_network

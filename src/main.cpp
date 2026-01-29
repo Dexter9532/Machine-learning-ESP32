@@ -21,7 +21,6 @@ extern "C" int main(void) {
   constexpr size_t hiddenCount{3U};
   constexpr size_t outputCount{1U};
 
-  constexpr size_t epochCount{10000};
   constexpr double learningRate{0.1};
 
   const ml::Matrix2d trainInputSets{
@@ -41,9 +40,12 @@ extern "C" int main(void) {
                                           trainInputSets, trainOutputSets};
 
   // Train the model once before starting the logic loop, return -1 on failure.
-  if (!network.train(epochCount, learningRate)) {
+  if (!network.train(learningRate)) {
     return -1;
   }
+
+  // Print the amount of epochs the algoritm used.
+  printk("Epochs used:  %d\n", network.getEpochsUsed());
 
   ml::Matrix1d trainInput{0.0, 0.0, 0.0};
 
@@ -58,7 +60,12 @@ extern "C" int main(void) {
     const double output{network.predict(trainInput)[0]};
 
     // Extract the digit, round to the nearest integer.
-    const uint8_t digit{static_cast<uint8_t>(output + 0.5)};
+    double out = output;
+    if (out < 0.0)
+      out = 0.0;
+    if (out > 7.0)
+      out = 7.0;
+    const uint8_t digit = static_cast<uint8_t>(out);
 
     // Update the displayed digit on change.
     if (digit != lastDigit) {
