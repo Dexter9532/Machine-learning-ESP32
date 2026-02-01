@@ -49,7 +49,21 @@ public:
    *
    * @return True if traingen is done, or False if not.
    */
-  bool train(size_t epochCount, double learningrate = 0) noexcept;
+  bool train(double learningrate = 0) noexcept;
+
+  /**
+   * @brief Check if the prediction is within tolerance for the training set.
+   *
+   * @return True if prediction is done, or False if not.
+   */
+  bool isPredictDone() noexcept;
+
+  /**
+   * @brief Get the amount of epochs used during training.
+   *
+   * @return The number of epochs used.
+   */
+  int getEpochsUsed() const noexcept;
 
   /**
    * @brief Delete not wanted constructors.
@@ -69,6 +83,7 @@ private:
   const ml::Matrix2d &myTrainOutput; // Reference to the trainingoutput.
   const unsigned
       myTrainSetCount; // Indicates the amount of trainingsetups avalible.
+  int myEpochsUsed{0}; // To save the amount of epochs used.
 };
 
 } // namespace ml::neural_network
