@@ -1,5 +1,10 @@
+//! @note Utmärkt jobbat, gubbar!
+//!
+//!       Riktigt coolt projekt, kul att ni gjorde en helt egen implementation med annan hårdvara etc.
+//!       än vad som har använts i skolan. Ett plus också för Zephyr. :)
+
 /**
- *@biref Main file for the machine-learning system.
+ *@brief Main file for the machine-learning system.
  */
 #include "buttons/buttons.hpp"
 #include "display/display.hpp"
@@ -61,6 +66,7 @@ extern "C" int main(void) {
 
     // Extract the digit, round to the nearest integer.
     double out = output;
+    //! @note Snygg hantering av "out of range"-numbers.
     if (out < 0.0)
       out = 0.0;
     if (out > 7.0)
@@ -68,6 +74,8 @@ extern "C" int main(void) {
     const uint8_t digit = static_cast<uint8_t>(out);
 
     // Update the displayed digit on change.
+    //! @note Snyggt att ni undviker onödiga skrivningar till displayen - skriv bara när talet 
+    //! ändras (som ni har gjort).
     if (digit != lastDigit) {
       lastDigit = digit;
       display_set_value(digit);

@@ -18,18 +18,20 @@ SingleLayer::SingleLayer(ml::dense_layer::Interface &hiddenLayer,
                          ml::dense_layer::Interface &outputLayer,
                          const ml::Matrix2d &trainInput,
                          const ml::Matrix2d &trainOutput)
-    : myHiddenLayer{hiddenLayer}, myOutputLayer{outputLayer},
-      myTrainInput{trainInput}, myTrainOutput{trainOutput},
-      myTrainSetCount(
-          static_cast<unsigned>(min(trainInput.size(), trainOutput.size()))) {}
+    : myHiddenLayer{hiddenLayer} 
+    , myOutputLayer{outputLayer}
+    , myTrainInput{trainInput}
+    , myTrainOutput{trainOutput}
+    , myTrainSetCount(static_cast<unsigned>(min(trainInput.size(), trainOutput.size()))) 
+{}
 
 //--------------------------------------------------------------------------------//
 const ml::Matrix1d &SingleLayer::predict(const ml::Matrix1d &input) noexcept {
-  myHiddenLayer.feedforward(
-      input); // run feedforward on the hidden layer with the input values
-  myOutputLayer.feedforward(
-      myHiddenLayer.output()); // run feedforward on the output layer using
-                               // the hidden layer's output as input
+   // run feedforward on the hidden layer with the input values
+  myHiddenLayer.feedforward(input);
+
+  // run feedforward on the output layer using the hidden layer's output as input
+  myOutputLayer.feedforward(myHiddenLayer.output()); 
   return myOutputLayer.output();
 }
 
@@ -72,6 +74,7 @@ bool SingleLayer::train(double learningrate) noexcept {
 
 bool SingleLayer::isPredictDone() noexcept {
 
+  //! @note Initiera helst med den universella initieraren {}.
   constexpr double tol = 1e-1;
 
   for (size_t i{}; i < myTrainSetCount; ++i) {
@@ -83,5 +86,7 @@ bool SingleLayer::isPredictDone() noexcept {
   }
   return true;
 }
+
 int SingleLayer::getEpochsUsed() const noexcept { return myEpochsUsed; }
+
 } // namespace ml::neural_network

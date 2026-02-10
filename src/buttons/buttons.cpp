@@ -1,12 +1,17 @@
+//! @note Snygg implementering! Jag lade till några kommentarer som mer handlar om stil är 
+//! funktionalitet; funktionsmässigt ser koden riktigt bra ut.!
+
 /**
  *@brief Main file for buttons functions.
  */
+//! @note Inkludera Zephyr-headers före lokala headers.
 #include "buttons.hpp"
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/sys/atomic.h>
 
+//! @note Föredra constexpr i C++.
 #define DEBOUNCE_MS 5
 
 /**
@@ -15,6 +20,12 @@
  *@return False if now vs last is not inside wanted debounce.
  *@return True if everything is okey and set new last.
  */
+//! @note Föredra anonyma namnrymder i C++ framför lagringsklassen static på funktioner och 
+//!       variabler med statisk (intern) länkning, dvs. funktioner och variabler som bara är
+//!       synliga i aktuell cpp-fil. Denna funktion är på gränsen till för stor för att inlina
+//!       skulle jag säga, men det är lugnt; kompilatorn har sista ordet och kommer ignorera er
+//!       om den inte "håller med". Att skriva inline hintar bara till kompilatorn att ni föreslår
+//!       att funktionen ska inlinas.
 static inline bool time_ok(atomic_t *t_last) {
   uint32_t now = k_uptime_get_32();
   uint32_t last = (uint32_t)atomic_get(t_last);

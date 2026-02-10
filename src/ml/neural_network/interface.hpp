@@ -1,3 +1,4 @@
+//! @note Bra!
 /**
  * @brief Interface for neural network functions
  */

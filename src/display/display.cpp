@@ -2,6 +2,9 @@
  *@brief Main file for display functions
  *
  */
+//! @note Samma kommentarer gällande sortering av headerfiler, anonyma namnrymder vs static som 
+//! i buttons.cpp gäller här.
+
 #include "display.hpp"
 #include "buttons/buttons.hpp"
 #include "misc/lv_area.h"

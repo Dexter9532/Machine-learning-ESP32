@@ -1,3 +1,4 @@
+//! @note Bra!
 /**
  * @brief Header-file for neural network functions
  */
@@ -21,6 +22,8 @@ public:
    * @param [in] trainOutput The output data that the model should be trained to
    * predict.
    */
+  //! @note Denna metod kan med säkerhet markeras noexcept, då ni inte allokerar något minne,
+  //!       kallar på några metoder som kastar undantag och gör det inte heller själva.
   explicit SingleLayer(ml::dense_layer::Interface &hiddenLayer,
                        ml::dense_layer::Interface &outputLayer,
                        const ml::Matrix2d &trainInput,
@@ -68,22 +71,31 @@ public:
   /**
    * @brief Delete not wanted constructors.
    */
-  SingleLayer() = delete;                    // Delete without info.
-  SingleLayer(const SingleLayer &) = delete; // Delete copy constructor.
-  SingleLayer &
-  operator=(const SingleLayer &) = delete;         // Delete copy assignment.
-  SingleLayer(SingleLayer &&) = delete;            // Delete move constructor.
-  SingleLayer &operator=(SingleLayer &&) = delete; // Delete move assignment.
+  //! @note Snyggade til lite här.
+  SingleLayer()                               = delete; // Delete without info.
+  SingleLayer(const SingleLayer &)            = delete; // Delete copy constructor.
+  SingleLayer &operator=(const SingleLayer &) = delete;  // Delete copy assignment.
+  SingleLayer(SingleLayer &&)                 = delete;  // Delete move constructor.
+  SingleLayer &operator=(SingleLayer &&)      = delete; // Delete move assignment.
 private:
-  ml::dense_layer::Interface
-      &myHiddenLayer; // Reference for the hiddenlayer from the interface.
-  ml::dense_layer::Interface
-      &myOutputLayer; // Reference for the outputlayer from the interface.
-  const ml::Matrix2d &myTrainInput;  // Reference to the traininginput.
-  const ml::Matrix2d &myTrainOutput; // Reference to the trainingoutput.
-  const unsigned
-      myTrainSetCount; // Indicates the amount of trainingsetups avalible.
-  int myEpochsUsed{0}; // To save the amount of epochs used.
-};
+  // Reference for the hiddenlayer from the interface.
+  ml::dense_layer::Interface &myHiddenLayer;
 
+  // Reference for the outputlayer from the interface.
+  ml::dense_layer::Interface &myOutputLayer;
+  
+   // Reference to the training input.
+  const ml::Matrix2d &myTrainInput;
+
+  // Reference to the trainingoutput.
+  const ml::Matrix2d &myTrainOutput;
+
+  // Indicates the amount of trainingsetups avalible.
+  const unsigned myTrainSetCount;
+
+  // To save the amount of epochs used.
+  //! @note Initiera alla medlemsvariabler i konstruktorn i stället för här, försök att inte blanda
+  //!       för strukturens skull.
+  int myEpochsUsed{0};
+};
 } // namespace ml::neural_network
