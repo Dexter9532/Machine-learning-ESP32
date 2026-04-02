@@ -30,6 +30,8 @@ west espressif monitor
 
 ## Clang-format
 
+Riktigt snyggt (och proffsigt) att ni använder `clang-format`! 
+
 The project uses clang-format.
 
 Run format check:

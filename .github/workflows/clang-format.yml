@@ -1,3 +1,4 @@
+# Detta ser ut som yml-filer på mitt förra jobb (dvs. proffsigt), fast mindre jobs, grymt!
 name: clang-format
 
 on:

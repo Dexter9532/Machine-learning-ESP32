@@ -5,6 +5,8 @@
  */
 #pragma once
 
+//! @note Samma kommentarer här gällande (void) och noexcept som i buttons.hpp.
+
 //----------------------------------------------------------------------------------------------------
 void display_init(void);
 
